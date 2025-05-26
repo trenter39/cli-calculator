@@ -1,0 +1,25 @@
+{
+  "name": "cli-app",
+  "version": "1.0.0",
+  "description": "Simple CLI calculator",
+  "main": "src/calculator.js",
+  "bin": {
+    "cli-app": "bin/cli.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "cli",
+    "calculator",
+    "node"
+  ],
+  "author": "Maximenko Danylo",
+  "license": "MIT",
+  "dependencies": {
+    "mocha": "^11.5.0"
+  }
+}
