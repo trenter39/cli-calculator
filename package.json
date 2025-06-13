@@ -10,6 +10,7 @@
     "test": "test"
   },
   "scripts": {
+    "start": "node bin/cli.js",
     "test": "mocha"
   },
   "keywords": [

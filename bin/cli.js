@@ -1,5 +1,24 @@
 const readline = require('readline');
-const { add, sub, mul, div } = require('../src/calculator');
+const showHelp = require('./help');
+const { add, sub, mul, div,
+    mod, pow, max, min,
+    round, sqrt, abs, log, fact
+} = require('../src/calculator');
+
+const operations = {
+    add, sub, mul, div,
+    mod, pow, max, min,
+    round, sqrt, abs, log, fact
+};
+const oneArgOps = [
+    'round', 'sqrt', 'abs',
+    'log', 'fact'
+];
+const twoArgOps = [
+    'add', 'sub', 'mul',
+    'div', 'mod', 'pow',
+    'max', 'min'
+];
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -8,50 +27,36 @@ const rl = readline.createInterface({
 });
 
 console.log('Welcome to CLI Calculator! Type "help" for usage instructions.');
-
 rl.prompt();
 
 rl.on('line', (line) => {
     const input = line.trim();
     if (input === 'help' || input === '--help' || input === '-h') {
-        console.log(`
-CLI Calculator Help!
-            
-Usage:
-    calc> <operation> <num1> <num2>
-            
-Operations:
-    add - Add two numbers: add 5 3
-    sub - Subtract two numbers: sub 10 2
-    mul - Multiply two numbers: mul 4 3
-    div - Divide two numbers: div 8 2
-
-Type Ctrl + C to exit.
-        `);
+        showHelp();
         rl.prompt();
         return;
     }
-    const [operation, aStr, bStr] = line.trim().split(' ');
-    const a = parseFloat(aStr);
-    const b = parseFloat(bStr);
+    const [operation, aStr, bStr] = line.split(' ');
 
-    if (isNaN(a) || isNaN(b)) {
-        console.error('Error: Both arguments must be valid numbers.');
-    } else {
-        let result;
-        switch (operation) {
-            case 'add': result = add(a, b); break;
-            case 'sub': result = sub(a, b); break;
-            case 'mul': result = mul(a, b); break;
-            case 'div': result = div(a, b); break;
-            default:
-                console.error('Unknown operation. Type "help" for available commands.');
-                rl.prompt();
-                return;
+    if (oneArgOps.includes(operation)) {
+        const a = parseFloat(aStr);
+        if (isNaN(a)) {
+            console.error('Please provide one valid number.');
+        } else {
+            console.log(`Result: ${operations[operation](a)}`);
         }
-        console.log(`Result: ${result}`);
+    } else if (twoArgOps.includes(operation)) {
+        const a = parseFloat(aStr);
+        const b = parseFloat(bStr);
+        if (isNaN(a) || isNaN(b)) {
+            console.error('Please provide two valid numbers.');
+        } else {
+            console.log(`Result: ${operations[operation](a, b)}`);
+        }
+    } else {
+        console.log(`Your input doesn't include any existing operation.
+Type '--help' for more information.`)
     }
-
     rl.prompt();
 }).on('close', () => {
     console.log('Goodbye!');
