@@ -31,6 +31,10 @@ rl.prompt();
 
 rl.on('line', (line) => {
     const input = line.trim();
+    if(input === 'exit') {
+        rl.close();
+        return;
+    }
     if (input === 'help' || input === '--help' || input === '-h') {
         showHelp();
         rl.prompt();
